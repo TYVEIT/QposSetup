@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+/Key_Tyveits.jks
+/Key_Tyveits.pem
+/Key_Tyveits.pk8
