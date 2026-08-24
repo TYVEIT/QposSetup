@@ -24,7 +24,7 @@
         android:layout_width="150dp"
         android:layout_height="0dp"
         android:layout_marginBottom="154dp"
-        android:src="@drawable/Vpvmos"
+        android:src="@drawable/logo"
         app:isCircle="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
