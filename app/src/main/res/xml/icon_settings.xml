@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:title="@string/icon">
-        <androidx.preference.Preference
+        <com.android.setup.CardPreference
             android:title="@string/qqq"
             android:key="icon1" />
-        <androidx.preference.Preference
+        <com.android.setup.CardPreference
             android:title="@string/sut"
             android:key="icon2" />
-        <androidx.preference.Preference
+        <com.android.setup.CardPreference
             android:title="@string/yhz"
             android:key="icon0" />
     </PreferenceCategory>

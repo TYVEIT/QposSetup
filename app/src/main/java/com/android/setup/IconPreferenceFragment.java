@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.om.OverlayManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -18,8 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceManager;
+import androidx.preference.PreferenceScreen;
 import androidx.preference.PreferenceViewHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IconPreferenceFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener {
     private SharedPreferences sharedPreferences = null;
@@ -35,16 +41,67 @@ public class IconPreferenceFragment extends PreferenceFragmentCompat implements 
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         setPreferencesFromResource(R.xml.icon_settings, rootKey);
-        CardPreference profile = findPreference("profile");
-        CardPreference security = findPreference("security");
-        CardPreference notifications = findPreference("notifications");
-
-        if (profile != null) profile.setPosition(CardPreference.POSITION_TOP);
-        if (security != null) security.setPosition(CardPreference.POSITION_MIDDLE);
-        if (notifications != null) notifications.setPosition(CardPreference.POSITION_BOTTOM);
         //用于取值的SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        //按 XML 中分组内的实际顺序，动态给首/中/尾分配卡片位置
+        applyCardPositions();
         initView();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // 延迟到视图创建后再关闭分隔线，避免 mRecyclerView 尚未初始化导致 NPE
+        setDividerHeight(0);
+    }
+
+    /**
+     * 遍历 PreferenceScreen 下所有分组，把同一分组内的卡片项按顺序分配
+     * TOP / MIDDLE / BOTTOM / SINGLE，从而拼成一张大卡片。
+     */
+    private void applyCardPositions() {
+        PreferenceScreen screen = getPreferenceScreen();
+        if (screen == null) {
+            return;
+        }
+        applyCardPositions(screen);
+    }
+
+    private void applyCardPositions(PreferenceGroup group) {
+        List<Preference> cardItems = new ArrayList<>();
+        for (int i = 0; i < group.getPreferenceCount(); i++) {
+            Preference preference = group.getPreference(i);
+            if (preference instanceof PreferenceGroup) {
+                applyCardPositions((PreferenceGroup) preference);
+            } else if (preference instanceof CardPreference
+                    || preference instanceof CardSwitchPreference) {
+                cardItems.add(preference);
+            }
+        }
+
+        int size = cardItems.size();
+        for (int i = 0; i < size; i++) {
+            Preference preference = cardItems.get(i);
+            int position;
+            if (size == 1) {
+                position = CardPreference.POSITION_SINGLE;
+            } else if (i == 0) {
+                position = CardPreference.POSITION_TOP;
+            } else if (i == size - 1) {
+                position = CardPreference.POSITION_BOTTOM;
+            } else {
+                position = CardPreference.POSITION_MIDDLE;
+            }
+            applyPosition(preference, position);
+        }
+    }
+
+    private void applyPosition(Preference preference, int position) {
+        if (preference instanceof CardSwitchPreference) {
+            ((CardSwitchPreference) preference).setPosition(position);
+        } else if (preference instanceof CardPreference) {
+            ((CardPreference) preference).setPosition(position);
+        }
     }
 
     private void initView() {
@@ -72,20 +129,20 @@ public class IconPreferenceFragment extends PreferenceFragmentCompat implements 
     }
     @Override
     public boolean onPreferenceTreeClick(@NonNull Preference preference) {
-        if (preference.getKey().equals("icon0")) {
+        if ("icon0".equals(preference.getKey())) {
             new Thread(() -> {
                 boolean success = OverlayHelper.disableOverlay(IconNot1);
                 boolean success1 = OverlayHelper.disableOverlay(IconNot2);
             }).start();
             Intent intent = new Intent(getActivity(),OverActivity.class);
             startActivity(intent);
-        } else if (preference.getKey().equals("icon1")) {
+        } else if ("icon1".equals(preference.getKey())) {
             new Thread(() -> {
                 boolean success = OverlayHelper.enableOverlay(IconQqq);
             }).start();
             Intent intent = new Intent(getActivity(),OverActivity.class);
             startActivity(intent);
-        } else if (preference.getKey().equals("icon2")) {
+        } else if ("icon2".equals(preference.getKey())) {
             new Thread(() -> {
                 boolean success = OverlayHelper.enableOverlay(IconQut);
             }).start();

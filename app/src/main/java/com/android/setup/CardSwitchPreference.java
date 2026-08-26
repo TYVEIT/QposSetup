@@ -4,31 +4,35 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
+import androidx.preference.SwitchPreferenceCompat;
 
-public class CardPreference extends Preference {
+public class CardSwitchPreference extends SwitchPreferenceCompat {
 
-    public static final int POSITION_TOP = 0;
-    public static final int POSITION_MIDDLE = 1;
-    public static final int POSITION_BOTTOM = 2;
-    public static final int POSITION_SINGLE = 3;
+    private int position = CardPreference.POSITION_MIDDLE;
 
-    private int position = POSITION_MIDDLE;
-
-    public CardPreference(Context context) {
+    public CardSwitchPreference(Context context) {
         super(context);
         setLayoutResource(R.layout.crad_preference);
+        setWidgetLayoutResource(R.layout.widget_switch_android16);
     }
 
-    public CardPreference(Context context, AttributeSet attrs) {
+    public CardSwitchPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayoutResource(R.layout.crad_preference);
+        setWidgetLayoutResource(R.layout.widget_switch_android16);
     }
 
-    public CardPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CardSwitchPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setLayoutResource(R.layout.crad_preference);
+        setWidgetLayoutResource(R.layout.widget_switch_android16);
+    }
+
+    public CardSwitchPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        setLayoutResource(R.layout.crad_preference);
+        setWidgetLayoutResource(R.layout.widget_switch_android16);
     }
 
     public void setPosition(int position) {
@@ -40,16 +44,16 @@ public class CardPreference extends Preference {
         super.onBindViewHolder(holder);
         View itemView = holder.itemView;
         switch (position) {
-            case POSITION_TOP:
+            case CardPreference.POSITION_TOP:
                 itemView.setBackgroundResource(R.drawable.card_style_top);
                 break;
-            case POSITION_MIDDLE:
+            case CardPreference.POSITION_MIDDLE:
                 itemView.setBackgroundResource(R.drawable.card_style_middle);
                 break;
-            case POSITION_BOTTOM:
+            case CardPreference.POSITION_BOTTOM:
                 itemView.setBackgroundResource(R.drawable.card_style_bottom);
                 break;
-            case POSITION_SINGLE:
+            case CardPreference.POSITION_SINGLE:
                 itemView.setBackgroundResource(R.drawable.card_style_single);
                 break;
         }
