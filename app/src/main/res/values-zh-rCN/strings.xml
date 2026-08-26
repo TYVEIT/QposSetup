@@ -17,4 +17,5 @@
     <string name="sut">方</string>
     <string name="qqq">圆</string>
     <string name="icon">图标形状</string>
+    <string name="bugjump">进入测试界面</string>
 </resources>

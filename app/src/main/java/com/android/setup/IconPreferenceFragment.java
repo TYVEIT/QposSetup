@@ -1,35 +1,20 @@
 package com.android.setup;
 
-import static android.app.ProgressDialog.show;
-
-import androidx.fragment.app.Fragment;
-import com.android.setup.IconActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.om.OverlayManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceManager;
-import androidx.preference.PreferenceScreen;
-import androidx.preference.PreferenceViewHolder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class IconPreferenceFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener {
     private SharedPreferences sharedPreferences = null;
-    private static final String TAG = "SystemCmd";
     private static final String IconQqq = "QQQ";
     private static final String IconQut = "Qut";
     private static final String IconNot1 = "Not1";
@@ -43,8 +28,6 @@ public class IconPreferenceFragment extends PreferenceFragmentCompat implements 
         setPreferencesFromResource(R.xml.icon_settings, rootKey);
         //用于取值的SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        //按 XML 中分组内的实际顺序，动态给首/中/尾分配卡片位置
-        applyCardPositions();
         initView();
     }
 
@@ -55,75 +38,54 @@ public class IconPreferenceFragment extends PreferenceFragmentCompat implements 
         setDividerHeight(0);
     }
 
-    /**
-     * 遍历 PreferenceScreen 下所有分组，把同一分组内的卡片项按顺序分配
-     * TOP / MIDDLE / BOTTOM / SINGLE，从而拼成一张大卡片。
-     */
-    private void applyCardPositions() {
-        PreferenceScreen screen = getPreferenceScreen();
-        if (screen == null) {
-            return;
-        }
-        applyCardPositions(screen);
-    }
-
-    private void applyCardPositions(PreferenceGroup group) {
-        List<Preference> cardItems = new ArrayList<>();
-        for (int i = 0; i < group.getPreferenceCount(); i++) {
-            Preference preference = group.getPreference(i);
-            if (preference instanceof PreferenceGroup) {
-                applyCardPositions((PreferenceGroup) preference);
-            } else if (preference instanceof CardPreference
-                    || preference instanceof CardSwitchPreference) {
-                cardItems.add(preference);
-            }
-        }
-
-        int size = cardItems.size();
-        for (int i = 0; i < size; i++) {
-            Preference preference = cardItems.get(i);
-            int position;
-            if (size == 1) {
-                position = CardPreference.POSITION_SINGLE;
-            } else if (i == 0) {
-                position = CardPreference.POSITION_TOP;
-            } else if (i == size - 1) {
-                position = CardPreference.POSITION_BOTTOM;
-            } else {
-                position = CardPreference.POSITION_MIDDLE;
-            }
-            applyPosition(preference, position);
-        }
-    }
-
-    private void applyPosition(Preference preference, int position) {
-        if (preference instanceof CardSwitchPreference) {
-            ((CardSwitchPreference) preference).setPosition(position);
-        } else if (preference instanceof CardPreference) {
-            ((CardPreference) preference).setPosition(position);
-        }
-    }
-
     private void initView() {
         loginDjiAccount = findPreference("login_dji_account");
         if (loginDjiAccount != null) {
             loginDjiAccount.setOnPreferenceClickListener(this);
         }
+        // 初始化时根据 SP 同步一次可见性
+        applyTestModeVisibilityFromSp();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // 每次回到页面时重新读取 SP，保证切换开关后能立即生效
+        applyTestModeVisibilityFromSp();
+    }
+
+    /**
+     * 从 SharedPreferences 读取开关状态，同步到 test_mode 分组的可见性。
+     */
+    private void applyTestModeVisibilityFromSp() {
+        if (sharedPreferences == null) {
+            return;
+        }
+        boolean enabled = sharedPreferences.getBoolean(TestSetupActivity1.KEY_TEST_MODE_ENABLED, false);
+        setTestModeCategoryVisible(enabled);
+    }
+
+    /**
+     * 显示或隐藏 key="test_mode" 的 PreferenceCategory（包含其下所有子项）。
+     *
+     * @param visible true 显示，false 隐藏
+     */
+    public void setTestModeCategoryVisible(boolean visible) {
+        PreferenceCategory category = findPreference("test_mode");
+        if (category != null) {
+            category.setVisible(visible);
+        }
     }
 
     @Override
     public boolean onPreferenceClick(@NonNull Preference preference) {
-        switch (preference.getKey()) {
-            case "login_dji_account":
-                String rtmpUrlStr = sharedPreferences.getString("rtmp_url_pre", "");
-                if ("".equals(rtmpUrlStr)) {
-                    Toast.makeText(getActivity(), "请在直播推流地址中随意填写值,再来点我...", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "填写了:" + rtmpUrlStr, Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-                break;
+        if ("login_dji_account".equals(preference.getKey())) {
+            String rtmpUrlStr = sharedPreferences.getString("rtmp_url_pre", "");
+            if ("".equals(rtmpUrlStr)) {
+                Toast.makeText(getActivity(), "请在直播推流地址中随意填写值,再来点我...", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "填写了:" + rtmpUrlStr, Toast.LENGTH_SHORT).show();
+            }
         }
         return false;
     }

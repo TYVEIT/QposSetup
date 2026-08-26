@@ -21,6 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication" >
         <activity
+            android:theme="@style/Open.Test.MyPreference"
             android:name=".IconActivity"
             android:exported="false" />
         <activity

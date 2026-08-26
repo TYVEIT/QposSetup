@@ -13,4 +13,12 @@
             android:title="@string/yhz"
             android:key="icon0" />
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="TestMode"
+        android:key="test_mode">
+        <com.android.setup.CardPreference
+            android:fragment="com.android.setup.TestFragment"
+            android:key="test_button"
+            android:title="@string/bugjump" />
+    </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

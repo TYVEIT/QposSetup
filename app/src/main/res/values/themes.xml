@@ -4,6 +4,9 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
+    <style name="Open.Test.MyPreference" parent="Theme.Material3.DayNight">
+        <!-- Hello -->
+    </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
 </resources>
