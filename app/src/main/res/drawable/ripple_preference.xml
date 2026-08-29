@@ -5,7 +5,7 @@
         <shape android:shape="rectangle">
             <!-- 这里的圆角大小要与你的卡片背景一致 -->
             <corners android:radius="8dp" />
-            <solid android:color="@android:color/white" />
+            <solid android:color="@color/system_preference" />
         </shape>
     </item>
 </ripple>
