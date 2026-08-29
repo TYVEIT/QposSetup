@@ -55,5 +55,18 @@
             app:title="@string/attachment_title" />
 
     </PreferenceCategory>
+    <PreferenceCategory android:title="PreferenceLayout">
+        <Preference
+            android:title="Test1"
+            android:summary="@string/bugjump"
+            android:layout="@layout/card_preference_up" />
+        <Preference
+            android:title="Test2"
+            android:layout="@layout/card_preference_res" />
+        <Preference
+            android:title="Test3"
+            android:summary="@string/bugjump"
+            android:layout="@layout/card_preference_down" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

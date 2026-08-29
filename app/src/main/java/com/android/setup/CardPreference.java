@@ -20,17 +20,17 @@ public class CardPreference extends Preference {
 
     public CardPreference(Context context) {
         super(context);
-        setLayoutResource(R.layout.crad_preference);
+        setLayoutResource(R.layout.card_preference);
     }
 
     public CardPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setLayoutResource(R.layout.crad_preference);
+        setLayoutResource(R.layout.card_preference);
     }
 
     public CardPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setLayoutResource(R.layout.crad_preference);
+        setLayoutResource(R.layout.card_preference);
     }
 
     /**

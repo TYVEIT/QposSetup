@@ -9,7 +9,9 @@
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
     android:paddingRight="?android:attr/listPreferredItemPaddingRight"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-    android:background="@drawable/card_style_middle"
+    android:background="@drawable/card_style_bottom"
+    android:layout_marginLeft="14dp"
+    android:layout_marginRight="14dp"
     android:clipToPadding="false"
     android:baselineAligned="false">
 
