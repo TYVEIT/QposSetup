@@ -3,4 +3,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="system_preference">#FFFFFFFF</color>
+    <color name="system_pre">#FFFFFFFF</color>
 </resources>
