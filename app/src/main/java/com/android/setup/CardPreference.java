@@ -49,7 +49,10 @@ public class CardPreference extends Preference {
         List<Preference> cardItems = new ArrayList<>();
         for (int i = 0; i < parent.getPreferenceCount(); i++) {
             Preference child = parent.getPreference(i);
-            if (child instanceof CardPreference || child instanceof CardSwitchPreference) {
+            if (child instanceof CardPreference
+                    || child instanceof CardSwitchPreference
+                    || child instanceof CardEditTextPreference
+                    || child instanceof CardListPreference) {
                 cardItems.add(child);
             }
         }
@@ -67,6 +70,9 @@ public class CardPreference extends Preference {
             }
         }
 
+        if (index == -1) {
+            return POSITION_SINGLE;
+        }
         if (index == 0) {
             return POSITION_TOP;
         } else if (index == size - 1) {

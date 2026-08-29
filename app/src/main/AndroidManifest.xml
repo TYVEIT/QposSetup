@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:sharedUserId="android.uid.system" >
+    android:sharedUserId="android.uid.system">
 
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
@@ -19,11 +19,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication" >
+        android:theme="@style/Theme.MyApplication">
         <activity
-            android:theme="@style/Open.Test.MyPreference"
-            android:name=".IconActivity"
+            android:name=".TfeActivity"
             android:exported="false" />
+        <activity
+            android:name=".IconActivity"
+            android:exported="false"
+            android:theme="@style/Open.MigPreference" />
         <activity
             android:name=".TestSetup2Activity"
             android:exported="true" />
@@ -39,9 +42,10 @@
         <activity
             android:name=".MainActivity"
             android:enableOnBackInvokedCallback="false"
-            android:exported="true" >
-            <intent-filter android:priority="10" >
+            android:exported="true">
+            <intent-filter android:priority="10">
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -49,4 +53,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

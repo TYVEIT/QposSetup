@@ -1,8 +1,12 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:layout="@layout/lgog"
+        android:selectable="false"/>
     <PreferenceCategory android:title="@android:string/unknownName">
         <com.android.setup.CardPreference
             android:title="test card no fragment"
+            android:key="test145"
             android:summary="1114514"/>
         <com.android.setup.CardSwitchPreference
             android:title="114514"
@@ -16,6 +20,17 @@
         <com.android.setup.CardPreference
             android:title="test card no fragment"
             android:summary="1114516"/>
+        <com.android.setup.CardEditTextPreference
+            android:title="hello"
+            app:key="signature14"
+            app:useSimpleSummaryProvider="true"/>
+        <com.android.setup.CardListPreference
+            app:defaultValue="reply1"
+            app:entries="@array/reply_entries"
+            app:entryValues="@array/reply_values"
+            app:key="reply1"
+            app:title="@string/reply_title"
+            app:useSimpleSummaryProvider="true" />
         <com.android.setup.CardSwitchPreference
             android:key="open"
             android:title="TestDowm" />
@@ -59,6 +74,7 @@
         <Preference
             android:title="Test1"
             android:summary="@string/bugjump"
+            android:key="opentest222"
             android:layout="@layout/card_preference_up" />
         <Preference
             android:title="Test2"
