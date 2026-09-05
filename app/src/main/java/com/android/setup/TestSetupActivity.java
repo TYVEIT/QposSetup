@@ -13,7 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.preference.PreferenceManager;
 
-public class TestSetupActivity1 extends AppCompatActivity {
+public class TestSetupActivity extends CollapsingToolbarBaseActivity {
 
     /** 控制 IconPreferenceFragment 中 test_mode 分组显示/隐藏的 SP key */
     public static final String KEY_TEST_MODE_ENABLED = "test_mode_enabled";
@@ -23,6 +23,9 @@ public class TestSetupActivity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_test_setup1);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false); // 顶层页不需要返回箭头
+        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -44,7 +47,7 @@ public class TestSetupActivity1 extends AppCompatActivity {
         Settings.Secure.putInt(getContentResolver(), "user_setup_complete", 0);
         Settings.Secure.putInt(getContentResolver(), "setup_wizard_has_run", 0);
         //Start MainActivity
-        Intent intent = new Intent(TestSetupActivity1.this,MainActivity.class);
+        Intent intent = new Intent(TestSetupActivity.this,MainActivity.class);
         startActivity(intent);
     }
 }

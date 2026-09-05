@@ -4,9 +4,11 @@
     <PreferenceCategory
         android:title="@string/icon">
         <com.android.setup.CardPreference
+            android:icon="@drawable/ic_qmo"
             android:title="@string/qqq"
             android:key="icon1" />
         <com.android.setup.CardPreference
+            android:icon="@drawable/ic_sqm"
             android:title="@string/sut"
             android:key="icon2" />
         <com.android.setup.CardPreference

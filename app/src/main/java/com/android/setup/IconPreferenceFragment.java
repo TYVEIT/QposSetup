@@ -61,7 +61,7 @@ public class IconPreferenceFragment extends PreferenceFragmentCompat implements 
         if (sharedPreferences == null) {
             return;
         }
-        boolean enabled = sharedPreferences.getBoolean(TestSetupActivity1.KEY_TEST_MODE_ENABLED, false);
+        boolean enabled = sharedPreferences.getBoolean(TestSetupActivity.KEY_TEST_MODE_ENABLED, false);
         setTestModeCategoryVisible(enabled);
     }
 

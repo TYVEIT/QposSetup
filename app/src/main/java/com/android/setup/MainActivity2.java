@@ -8,21 +8,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class IconActivity extends CollapsingToolbarBaseActivity {
-    private static final String TAG = "SystemCmd";
+public class MainActivity2 extends CollapsingToolbarBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_icon);
+        setContentView(R.layout.activity_main2);
         setLargeTitle(R.string.app_name);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 顶层页不需要返回箭头
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false); // 顶层页不需要返回箭头
         }
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.iconsettings, new IconPreferenceFragment())
+                .replace(R.id.setupsettings, new SetupFragment())
                 .commit();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
