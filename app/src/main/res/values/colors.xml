@@ -15,4 +15,5 @@
     <color name="on_surface">#1C1B1F</color>
     <color name="group_card_divider">#E5E5EA</color>
     <color name="group_card_bg">#FFFFFF</color>
+    <color name="texttitle">#FF000000</color>
 </resources>
